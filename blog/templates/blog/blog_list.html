@@ -16,7 +16,7 @@
                         {% block blog_list_title %}文章列表(一共有{{ page_of_blogs.paginator.count }}篇播客){% endblock %}
                     </div>
                     <div class="panel-body">
-                        {% for blog in page_of_blogs.object_list %}
+                        {% for blog in blogs %}
                             <div class="blogs">
                                 <h3><a href="{% url 'blog_detail' blog.pk %}"> {{ blog.title }}</a></h3>
                                 <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
@@ -42,7 +42,11 @@
                         {% endif %}
 
                         {% for page_num in page_of_blogs.paginator.page_range %}
-                            <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                            {% if page_num == page_of_blogs.number %}
+                                <li class="active"><span href="?page={{ page_num }}">{{ page_num }}</span></li>
+                            {% else %}
+                                <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                            {% endif %}
                         {% endfor %}
 
                         {% if page_of_blogs.has_next %}
